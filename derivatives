@@ -1,0 +1,134 @@
+import random
+
+# List of functions (you can add more functions here)
+functions = {
+    'a': ('1st derivative of y = x^10', '10x^9'),
+    'b': ('2nd derivative of y = x^10', '90x^8'),
+    'c': ('1st derivative of y = 1 / 7y^2', '-2 / 7y^3'),
+    'd': ('1st derivative of y = 5x^10 + 3x^8 - 2x^5', '50x^9 + 24x^7 - 10x^4'),
+    'e': ('2nd derivative of y = 5x^10 +3x^8 - 2x^5', '450x^8 + 168x^6 - 40x^3'),
+    'f': ('3rd derivative of y = 5x^10 + 3x^8 - 2x^5', '3600x^7 + 1008x^5 - 120x^2'),
+    'g': ('1st derivative of y = (3x^5 - 3x^2)^3', '3 * (3x^5 - 3x^2)^2 * (15x^4 - 6x)'),
+    'h': ('2nd derivative of y = 2x^10 - 4x^9 + 6x^8 - 8x^7 + 10x^6', '180x^8 - 288x^7 + 336x^6 - 336x^5 - 300x^6'),
+    'i': ('3rd derivative of y = 2x^10 - 4x^9 + 6x^8 - 8x^7 + 10x^6', '1440x^7 - 2016x^6 + 2016x^5 - 1680x^6 + 1200x^3'),
+    'j': ('1st derivative of y = x^10 + 10x^5 + 5', '10x^9 + 50x^4'),
+    'k': ('2nd derivative of y = x^10 + 10x^5 + 5', '90x^8 + 200x^3'),
+    'l': ('1st derivative of y = (x - 3) * (x^2 + 2)', '3x^2 - 6x + 2'),
+    'm': ('1st derivative of y = 30x^9 - 7x^9 + 15x^7', '30x^9 - 63x^8 + 105x^6'),
+    'n': ('2nd derivative of y = 30x^9 - 7x^9 + 15x^7', '270x^8 - 504x^7 + 630x^5'),
+    'o': ('3rd derivative of y = 30x^9 - 7x^9 + 15x^7', '2160x^7 - 3528x^6 + 3150x^4'),
+    'p': ('1st derivative of y = (x^2 + x)^100', '100(x^2 + x)^99 * (2x+1)')
+    # Add more functions as needed
+}
+
+# List of questions and answers (you can add more questions and answers here)
+questions = {
+    'a': ('What is the 1st derivative of y = x^10?'),
+    'b': ('What is the 2nd derivative of y = x^10?'),
+    'c': ('What is the 1st derivative of 1st derivative of y = 1 / 7y^2?'),
+    'd': ('What is the 1st derivative of y = 5x^10 + 3x^8 - 2x^5?'),
+    'e': ('What is the 2nd derivative of y = 5x^10 + 3x^8 - 2x^5?'),
+    'f': ('What is the 3rd derivative of y = 5x^10 + 3x^8 - 2x^5?'),
+    'g': ('What is the 1st derivative of y = (3x^5 - 3x^2)^3?'),
+    'h': ('What is the 2nd derivative of y = 2x^10 - 4x^9 + 6x^8 - 8x^7 + 10x^6?'),
+    'i': ('What is the 3rd derivative of y = 2x^10 - 4x^9 + 6x^8 - 8x^7 + 10x^6?'),
+    'j': ('What is the 1st derivative of y = x^10 + 10x^5 + 5?'),
+    'k': ('What is the 2nd derivative of y = x^10 + 10x^5 + 5?'),
+    'l': ('What is the 1st derivative of y = (x - 3) * (x^2 + 2)?'),
+    'm': ('What is the 1st derivative of y = 30x^9 - 7x^9 + 15x^7?'),
+    'n': ('What is the 2nd derivative of y = 30x^9 - 7x^9 + 15x^7?'),
+    'o': ('What is the 3rd derivative of y = 30x^9 - 7x^9 + 15x^7?'),
+  'p': ('What is the 1st derivative of y = (x^2 + x)^100?')
+  
+  # Add more questions and answers as needed
+}
+
+# ASCII representation of the hangman
+hangman_parts = [
+    """
+        ------
+       |    |
+       |    O
+       |   /|\\
+       |    |
+       |   / \\
+    """,
+    """
+        ------
+       |    |
+       |    O
+       |   /|\\
+       |    |
+       |   / 
+    """,
+    """
+        ------
+       |    |
+       |    O
+       |   /|\\
+       |    |
+       |   
+    """,
+]
+
+def get_random_function():
+    letter = random.choice(list(functions.keys()))
+    function, answer = functions[letter]
+    return letter, function, answer
+
+def display_word(word, guessed_letters):
+    display = ""
+    for letter in word:
+        if letter in guessed_letters:
+            display += letter
+        else:
+            display += "_"
+    return display
+
+def hangman_game():
+    total_functions = len(functions)
+    solved_functions = 0
+    solved_questions = set()
+
+    print("Reminders:")
+    print("• Put a space for operators.")
+    print("• Don't put a space for negative sign.")
+    print("• Write the exponents as x^y with no spaces."),
+    print()
+
+    print("Let's play Hangman with Derivatives!")
+    while solved_functions < total_functions:
+        letter, function, answer = get_random_function()
+        question = questions[letter]
+
+        if question in solved_questions:
+            continue  # Skip the question if it has already been solved
+
+
+        tries = 3
+        guessed_letters = []
+        while tries > 0:
+            print(f"\nQuestion: {question}")
+            display = display_word(answer, guessed_letters)
+            
+
+            guess = input("Enter your answer: ").strip()
+            if guess == answer:
+                print("\nCorrect answer!")
+                solved_functions += 1
+                solved_questions.add(question)
+                break
+            else:
+                print("Incorrect answer!")
+                tries -= 1
+                if tries > 0:
+                    print(f"\nHangman:\n{hangman_parts[3-tries]}")
+        
+        if tries == 0:
+            print(f"\nYou lose! The correct answer was: {answer}")
+            solved_questions.add(question)
+
+    print("\nCongratulations! You've answered all the functions correctly!")
+
+if __name__ == "__main__":
+    hangman_game()
